@@ -85,27 +85,27 @@
 
 ### CRUD 実装
 
-- [ ] `app/crud/__init__.py` の作成
-- [ ] `app/crud/project.py` の作成
-  - [ ] get_project 関数
-  - [ ] get_projects 関数
-  - [ ] create_project 関数
-  - [ ] update_project 関数
-  - [ ] delete_project 関数
-- [ ] `app/crud/task.py` の作成
-  - [ ] get_task 関数
-  - [ ] get_tasks 関数
-  - [ ] create_task 関数
-  - [ ] update_task 関数
-  - [ ] delete_task 関数
-- [ ] `app/crud/user.py` の作成
-  - [ ] get_user 関数
-  - [ ] get_users 関数
-  - [ ] create_user 関数
-- [ ] `app/crud/message.py` の作成
-  - [ ] get_message 関数
-  - [ ] get_messages 関数
-  - [ ] create_message 関数
+- [x] `app/crud/__init__.py` の作成
+- [x] `app/crud/project.py` の作成
+  - [x] get_project 関数
+  - [x] get_projects 関数
+  - [x] create_project 関数
+  - [x] update_project 関数
+  - [x] delete_project 関数
+- [x] `app/crud/task.py` の作成
+  - [x] get_task 関数
+  - [x] get_tasks 関数
+  - [x] create_task 関数
+  - [x] update_task 関数
+  - [x] delete_task 関数
+- [x] `app/crud/user.py` の作成
+  - [x] get_user 関数
+  - [x] get_users 関数
+  - [x] create_user 関数
+- [x] `app/crud/message.py` の作成
+  - [x] get_message 関数
+  - [x] get_messages 関数
+  - [x] create_message 関数
 
 ## 🌐 API エンドポイント
 
