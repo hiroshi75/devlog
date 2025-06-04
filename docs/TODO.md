@@ -51,35 +51,35 @@
 
 ### Alembic 設定
 
-- [ ] Alembic の初期化 (`alembic init alembic`)
-- [ ] `alembic.ini` の設定
-- [ ] `alembic/env.py` の設定
-- [ ] 初期マイグレーションの作成
-- [ ] マイグレーションの実行
+- [x] Alembic の初期化 (`alembic init alembic`)
+- [x] `alembic.ini` の設定
+- [x] `alembic/env.py` の設定
+- [x] 初期マイグレーションの作成
+- [x] マイグレーションの実行
 
 ## 📋 スキーマ定義
 
 ### Pydantic スキーマ
 
-- [ ] `app/schemas/__init__.py` の作成
-- [ ] `app/schemas/project.py` の作成
-  - [ ] ProjectBase スキーマ
-  - [ ] ProjectCreate スキーマ
-  - [ ] ProjectUpdate スキーマ
-  - [ ] Project レスポンススキーマ
-- [ ] `app/schemas/task.py` の作成
-  - [ ] TaskBase スキーマ
-  - [ ] TaskCreate スキーマ
-  - [ ] TaskUpdate スキーマ
-  - [ ] Task レスポンススキーマ
-- [ ] `app/schemas/user.py` の作成
-  - [ ] UserBase スキーマ
-  - [ ] UserCreate スキーマ
-  - [ ] User レスポンススキーマ
-- [ ] `app/schemas/message.py` の作成
-  - [ ] MessageBase スキーマ
-  - [ ] MessageCreate スキーマ
-  - [ ] Message レスポンススキーマ
+- [x] `app/schemas/__init__.py` の作成
+- [x] `app/schemas/project.py` の作成
+  - [x] ProjectBase スキーマ
+  - [x] ProjectCreate スキーマ
+  - [x] ProjectUpdate スキーマ
+  - [x] Project レスポンススキーマ
+- [x] `app/schemas/task.py` の作成
+  - [x] TaskBase スキーマ
+  - [x] TaskCreate スキーマ
+  - [x] TaskUpdate スキーマ
+  - [x] Task レスポンススキーマ
+- [x] `app/schemas/user.py` の作成
+  - [x] UserBase スキーマ
+  - [x] UserCreate スキーマ
+  - [x] User レスポンススキーマ
+- [x] `app/schemas/message.py` の作成
+  - [x] MessageBase スキーマ
+  - [x] MessageCreate スキーマ
+  - [x] Message レスポンススキーマ
 
 ## 🔧 CRUD 操作
 
