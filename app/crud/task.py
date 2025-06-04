@@ -18,6 +18,7 @@ def get_tasks(
     skip: int = 0,
     limit: int = 100,
     project_id: Optional[int] = None,
+    assignee_id: Optional[int] = None,
     status: Optional[str] = None
 ) -> List[Task]:
     """タスクリストの取得"""
@@ -25,6 +26,9 @@ def get_tasks(
     
     if project_id is not None:
         query = query.filter(Task.project_id == project_id)
+    
+    if assignee_id is not None:
+        query = query.filter(Task.assignee_id == assignee_id)
     
     if status is not None:
         query = query.filter(Task.status == status)

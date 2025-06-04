@@ -111,45 +111,45 @@
 
 ### ルーター実装
 
-- [ ] `app/api/__init__.py` の作成
-- [ ] `app/api/projects.py` の作成
-  - [ ] GET `/projects/` エンドポイント
-  - [ ] POST `/projects/` エンドポイント
-  - [ ] GET `/projects/{id}` エンドポイント
-  - [ ] PUT `/projects/{id}` エンドポイント
-  - [ ] DELETE `/projects/{id}` エンドポイント
-- [ ] `app/api/tasks.py` の作成
-  - [ ] GET `/tasks/` エンドポイント
-  - [ ] POST `/tasks/` エンドポイント
-  - [ ] GET `/tasks/{id}` エンドポイント
-  - [ ] PUT `/tasks/{id}` エンドポイント
-  - [ ] DELETE `/tasks/{id}` エンドポイント
-- [ ] `app/api/users.py` の作成
-  - [ ] GET `/users/` エンドポイント
-  - [ ] POST `/users/` エンドポイント
-  - [ ] GET `/users/{id}` エンドポイント
-- [ ] `app/api/messages.py` の作成
-  - [ ] GET `/messages/` エンドポイント（フィルター対応）
-  - [ ] POST `/messages/` エンドポイント
-  - [ ] GET `/messages/{id}` エンドポイント
+- [x] `app/api/__init__.py` の作成
+- [x] `app/api/projects.py` の作成
+  - [x] GET `/projects/` エンドポイント
+  - [x] POST `/projects/` エンドポイント
+  - [x] GET `/projects/{id}` エンドポイント
+  - [x] PUT `/projects/{id}` エンドポイント
+  - [x] DELETE `/projects/{id}` エンドポイント
+- [x] `app/api/tasks.py` の作成
+  - [x] GET `/tasks/` エンドポイント
+  - [x] POST `/tasks/` エンドポイント
+  - [x] GET `/tasks/{id}` エンドポイント
+  - [x] PUT `/tasks/{id}` エンドポイント
+  - [x] DELETE `/tasks/{id}` エンドポイント
+- [x] `app/api/users.py` の作成
+  - [x] GET `/users/` エンドポイント
+  - [x] POST `/users/` エンドポイント
+  - [x] GET `/users/{id}` エンドポイント
+- [x] `app/api/messages.py` の作成
+  - [x] GET `/messages/` エンドポイント（フィルター対応）
+  - [x] POST `/messages/` エンドポイント
+  - [x] GET `/messages/{id}` エンドポイント
 
 ### メインアプリケーション
 
-- [ ] `app/main.py` の作成
-  - [ ] FastAPI アプリケーションの初期化
-  - [ ] ルーターの登録
-  - [ ] CORS 設定（必要に応じて）
-  - [ ] ヘルスチェックエンドポイント
+- [x] `app/main.py` の作成
+  - [x] FastAPI アプリケーションの初期化
+  - [x] ルーターの登録
+  - [x] CORS 設定（必要に応じて）
+  - [x] ヘルスチェックエンドポイント
 
 ## 🧪 テスト
 
 ### テスト環境設定
 
-- [ ] `tests/__init__.py` の作成
-- [ ] `tests/conftest.py` の作成
-  - [ ] テスト用データベースの設定
-  - [ ] テストクライアントの設定
-  - [ ] フィクスチャの定義
+- [x] `tests/__init__.py` の作成
+- [x] `tests/conftest.py` の作成
+  - [x] テスト用データベースの設定
+  - [x] テストクライアントの設定
+  - [x] フィクスチャの定義
 
 ### 単体テスト
 
@@ -161,14 +161,14 @@
 
 ### 統合テスト
 
-- [ ] `tests/test_api_projects.py` の作成
-  - [ ] プロジェクト CRUD のテスト
-- [ ] `tests/test_api_tasks.py` の作成
-  - [ ] タスク CRUD のテスト
-- [ ] `tests/test_api_users.py` の作成
-  - [ ] ユーザー CRUD のテスト
-- [ ] `tests/test_api_messages.py` の作成
-  - [ ] メッセージ CRUD のテスト
+- [x] `tests/test_api_projects.py` の作成
+  - [x] プロジェクト CRUD のテスト
+- [x] `tests/test_api_tasks.py` の作成
+  - [x] タスク CRUD のテスト
+- [x] `tests/test_api_users.py` の作成
+  - [x] ユーザー CRUD のテスト
+- [x] `tests/test_api_messages.py` の作成
+  - [x] メッセージ CRUD のテスト
 
 ## 📚 ドキュメント
 

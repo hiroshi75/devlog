@@ -23,9 +23,23 @@ def get_user_by_username(db: Session, username: str) -> Optional[User]:
     return db.query(User).filter(User.username == username).first()
 
 
-def get_users(db: Session, skip: int = 0, limit: int = 100) -> List[User]:
+def get_users(
+    db: Session,
+    skip: int = 0,
+    limit: int = 100,
+    username: Optional[str] = None,
+    email: Optional[str] = None
+) -> List[User]:
     """ユーザーリストの取得"""
-    return db.query(User).offset(skip).limit(limit).all()
+    query = db.query(User)
+    
+    if username is not None:
+        query = query.filter(User.username == username)
+    
+    if email is not None:
+        query = query.filter(User.email == email)
+    
+    return query.offset(skip).limit(limit).all()
 
 
 def create_user(db: Session, user: UserCreate) -> Optional[User]:
