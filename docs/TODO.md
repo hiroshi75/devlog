@@ -4,28 +4,28 @@
 
 ### 環境構築
 
-- [ ] プロジェクトディレクトリ構造の作成
-  - [ ] `app/` ディレクトリ作成
-  - [ ] `app/models/` ディレクトリ作成
-  - [ ] `app/schemas/` ディレクトリ作成
-  - [ ] `app/crud/` ディレクトリ作成
-  - [ ] `app/api/` ディレクトリ作成
-  - [ ] `app/db/` ディレクトリ作成
-  - [ ] `tests/` ディレクトリ作成
-  - [ ] `alembic/` ディレクトリ作成
+- [x] プロジェクトディレクトリ構造の作成
+  - [x] `app/` ディレクトリ作成
+  - [x] `app/models/` ディレクトリ作成
+  - [x] `app/schemas/` ディレクトリ作成
+  - [x] `app/crud/` ディレクトリ作成
+  - [x] `app/api/` ディレクトリ作成
+  - [x] `app/db/` ディレクトリ作成
+  - [x] `tests/` ディレクトリ作成
+  - [x] `alembic/` ディレクトリ作成
 
 ### 依存関係のセットアップ
 
-- [ ] 必要なライブラリのインストール
-  - [ ] FastAPI のインストール (`uv add fastapi`)
-  - [ ] SQLAlchemy のインストール (`uv add sqlalchemy`)
-  - [ ] Alembic のインストール (`uv add alembic`)
-  - [ ] Uvicorn のインストール (`uv add uvicorn`)
-  - [ ] Pydantic のインストール (`uv add pydantic`)
-  - [ ] python-dotenv のインストール (`uv add python-dotenv`)
-  - [ ] psycopg2-binary のインストール (`uv add psycopg2-binary`)
-  - [ ] pytest のインストール (`uv add pytest`)
-  - [ ] httpx のインストール (テスト用) (`uv add httpx`)
+- [x] 必要なライブラリのインストール
+  - [x] FastAPI のインストール (`uv add fastapi`)
+  - [x] SQLAlchemy のインストール (`uv add sqlalchemy`)
+  - [x] Alembic のインストール (`uv add alembic`)
+  - [x] Uvicorn のインストール (`uv add uvicorn`)
+  - [x] Pydantic のインストール (`uv add pydantic`)
+  - [x] python-dotenv のインストール (`uv add python-dotenv`)
+  - [x] psycopg2-binary のインストール (`uv add psycopg2-binary`)
+  - [x] pytest のインストール (`uv add pytest`)
+  - [x] httpx のインストール (テスト用) (`uv add httpx`)
 
 ## 🗄️ データベース設計
 
