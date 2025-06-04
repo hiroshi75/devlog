@@ -1,7 +1,7 @@
-# DevStatusAPI
+# DevStatusMCP
 
-Slack 風の開発状況共有サービスのためのバックエンド API です。  
-複数人が複数プロジェクトで複数タスクを進める状況において、開発進捗やコメントなどをメッセージ形式で一元管理することを目的としています。
+Slack 風の開発状況共有サービスのための MCP（Model Context Protocol）サーバーです。  
+複数人が複数プロジェクトで複数タスクを進める状況において、開発進捗やコメントなどをメッセージ形式で一元管理し、LLM と連携して開発状況を把握・管理することを目的としています。
 
 ## 📦 機能概要
 
@@ -9,21 +9,31 @@ Slack 風の開発状況共有サービスのためのバックエンド API で
 - タスクの作成・取得・更新・削除
 - ユーザー管理（追加・一覧取得）
 - メッセージ投稿・取得（ステータス更新、スレッド対応）
+- LLM との統合による自然言語での操作
 
 ## 🚀 使用技術
 
 - Python 3.12+
-- FastMCP
+- FastMCP（MCP サーバーフレームワーク）
 - SQLAlchemy
 - PostgreSQL（または SQLite for development）
-- Uvicorn（開発サーバ）
 - Alembic（マイグレーション）
 
 ---
 
 ## 🛠️ セットアップ手順
 
-### 1. .env ファイルの作成
+### 1. 依存関係のインストール
+
+```bash
+# uvを使用（推奨）
+uv add fastmcp sqlalchemy alembic psycopg2-binary python-dotenv
+
+# または pip を使用
+pip install fastmcp sqlalchemy alembic psycopg2-binary python-dotenv
+```
+
+### 2. .env ファイルの作成
 
 `.env` ファイルに以下のような内容を記述してください：
 
@@ -37,7 +47,7 @@ DATABASE_URL=postgresql://user:password@localhost/devstatus
 DATABASE_URL=sqlite:///./devstatus.db
 ```
 
-### 4. データベース初期化
+### 3. データベース初期化
 
 ```bash
 alembic upgrade head
@@ -47,78 +57,128 @@ alembic upgrade head
 
 ## ▶️ 実行方法
 
+### MCP サーバーとして実行
+
 ```bash
-uvicorn main:app --reload
+# 標準実行（STDIO トランスポート）
+python app/main.py
+
+# FastMCP CLI を使用
+fastmcp run app/main.py:mcp
+
+# デバッグモード
+fastmcp run app/main.py:mcp --log-level DEBUG
 ```
 
-API ドキュメントは以下の URL で確認できます：
+### MCP インスペクターでテスト
 
-- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
-- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+```bash
+mcp dev app/main.py
+```
+
+ブラウザで [http://localhost:5173](http://localhost:5173) にアクセスして、ツールやリソースをテストできます。
 
 ---
 
-## 📘 エンドポイント例
+## 🔧 MCP ツール一覧
 
-### プロジェクト
+### プロジェクト管理
 
-| メソッド | パス             | 説明                 |
-| -------- | ---------------- | -------------------- |
-| `GET`    | `/projects/`     | プロジェクト一覧取得 |
-| `POST`   | `/projects/`     | プロジェクト作成     |
-| `GET`    | `/projects/{id}` | プロジェクト詳細取得 |
-| `PUT`    | `/projects/{id}` | プロジェクト更新     |
-| `DELETE` | `/projects/{id}` | プロジェクト削除     |
+- `create_project` - 新規プロジェクトを作成
+- `get_projects` - プロジェクト一覧を取得
+- `get_project` - 特定のプロジェクトを取得
+- `update_project` - プロジェクト情報を更新
+- `delete_project` - プロジェクトを削除
 
-### タスク
+### タスク管理
 
-| メソッド | パス          | 説明           |
-| -------- | ------------- | -------------- |
-| `GET`    | `/tasks/`     | タスク一覧取得 |
-| `POST`   | `/tasks/`     | タスク作成     |
-| `GET`    | `/tasks/{id}` | タスク詳細取得 |
-| `PUT`    | `/tasks/{id}` | タスク更新     |
-| `DELETE` | `/tasks/{id}` | タスク削除     |
+- `create_task` - 新規タスクを作成
+- `get_tasks` - タスク一覧を取得（プロジェクトやステータスでフィルタ可能）
+- `get_task` - 特定のタスクを取得
+- `update_task` - タスク情報を更新
+- `delete_task` - タスクを削除
 
-### ユーザー
+### ユーザー管理
 
-| メソッド | パス          | 説明             |
-| -------- | ------------- | ---------------- |
-| `GET`    | `/users/`     | ユーザー一覧取得 |
-| `POST`   | `/users/`     | ユーザー登録     |
-| `GET`    | `/users/{id}` | ユーザー詳細取得 |
+- `create_user` - 新規ユーザーを登録
+- `get_users` - ユーザー一覧を取得
+- `get_user` - 特定のユーザー情報を取得
 
-### メッセージ
+### メッセージ管理
 
-| メソッド | パス             | 説明                                 |
-| -------- | ---------------- | ------------------------------------ |
-| `GET`    | `/messages/`     | メッセージ一覧取得（フィルター対応） |
-| `POST`   | `/messages/`     | メッセージ投稿                       |
-| `GET`    | `/messages/{id}` | メッセージ詳細取得                   |
+- `create_message` - メッセージを投稿
+- `get_messages` - メッセージ一覧を取得（各種フィルタ対応）
+- `get_message` - 特定のメッセージを取得
 
 ---
 
-## 📂 ディレクトリ構成（例）
+## 📋 MCP リソース一覧
+
+- `project://{project_id}` - プロジェクト情報
+- `task://{task_id}` - タスク情報
+- `user://{user_id}` - ユーザー情報
+- `messages://recent` - 最近のメッセージ一覧
+
+---
+
+## 🤖 Claude Desktop / Cursor での使用
+
+### Claude Desktop へのインストール
+
+```bash
+fastmcp install app/main.py
+```
+
+### Cursor での設定
+
+`~/.cursor/mcp.json` に以下を追加：
+
+```json
+{
+  "mcpServers": {
+    "devstatus": {
+      "command": "uv",
+      "args": ["--directory", "/path/to/devlog", "run", "app/main.py"]
+    }
+  }
+}
+```
+
+---
+
+## 📂 ディレクトリ構成
 
 ```
-dev-status-api/
+devlog/
 ├── app/
-│   ├── main.py
+│   ├── main.py           # FastMCPサーバーのエントリーポイント
 │   ├── models/           # SQLAlchemyモデル
 │   ├── schemas/          # Pydanticスキーマ
 │   ├── crud/             # CRUD操作ロジック
-│   ├── api/              # ルーティング
+│   ├── tools/            # MCPツール定義
+│   ├── resources/        # MCPリソース定義
 │   └── db/               # DB接続・初期化
+├── tests/                # テストコード
 ├── alembic/              # マイグレーション管理
-├── requirements.txt
+├── docs/                 # ドキュメント
+│   ├── TODO.md          # 開発タスク管理
+│   └── fastmcp_guide.md # FastMCP基本ガイド
 └── README.md
 ```
 
 ---
 
-## 🧪 テスト（未実装）
+## 🧪 テスト
 
-後日 `pytest` による自動テストを追加予定です。
+TDD（テスト駆動開発）で実装を進めています：
+
+```bash
+# テストの実行
+pytest
+
+# カバレッジ付きテスト
+pytest --cov=app --cov-report=html
+```
 
 ---
 

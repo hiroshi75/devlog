@@ -21,16 +21,17 @@ uv add ライブラリ名
  - README.mdに作るものの仕様が書いてあります。
  - .envはあなたには見えないかもしれませんが、適切に書かれています。
 
-## DevStatusAPI 開発方針
+## DevStatusMCP 開発方針
 
 ### プロジェクト概要
-- Slack風の開発状況共有サービスのバックエンドAPI
+- Slack風の開発状況共有サービスのMCPサーバー
 - 複数人が複数プロジェクトで複数タスクを進める状況を一元管理
 - メッセージ形式での進捗管理とコミュニケーション
+- LLMとの統合による自然言語での操作
 
 ### 技術スタック
 - Python 3.12+
-- FastAPI（Webフレームワーク）
+- FastMCP（MCPサーバーフレームワーク）
 - SQLAlchemy（ORM）
 - PostgreSQL/SQLite（データベース）
 - Alembic（マイグレーション）
@@ -41,16 +42,18 @@ uv add ライブラリ名
 ```
 devlog/
 ├── app/
-│   ├── main.py          # FastAPIアプリケーションのエントリーポイント
+│   ├── main.py          # FastMCPサーバーのエントリーポイント
 │   ├── models/          # SQLAlchemyモデル定義
 │   ├── schemas/         # Pydanticスキーマ定義
 │   ├── crud/            # CRUD操作ロジック
-│   ├── api/             # APIエンドポイント（ルーター）
+│   ├── tools/           # MCPツール定義
+│   ├── resources/       # MCPリソース定義
 │   └── db/              # データベース接続・設定
 ├── tests/               # テストコード
 ├── alembic/             # データベースマイグレーション
 ├── docs/                # ドキュメント
-│   └── TODO.md          # 開発タスク管理
+│   ├── TODO.md          # 開発タスク管理
+│   └── fastmcp_guide.md # FastMCP基本ガイド
 └── .env                 # 環境変数設定
 ```
 
@@ -67,25 +70,27 @@ devlog/
 2. **データベース設計** - モデル定義とマイグレーション設定
 3. **スキーマ定義** - Pydanticスキーマの作成
 4. **CRUD実装** - データベース操作ロジック
-5. **APIエンドポイント** - RESTful APIの実装
-6. **テスト作成** - 単体テストと統合テスト
+5. **MCPツール実装** - FastMCPツールの実装
+6. **MCPリソース実装** - FastMCPリソースの実装
+7. **テスト作成** - 単体テストと統合テスト
 
 #### 3. コーディング規約
 - **命名規則**
   - クラス名: PascalCase（例: `ProjectModel`）
   - 関数名・変数名: snake_case（例: `get_project_by_id`）
   - 定数: UPPER_SNAKE_CASE（例: `DATABASE_URL`）
+  - MCPツール名: snake_case（例: `create_project`）
 
 - **ファイル構成**
   - 1ファイル1責務の原則を守る
-  - モデル、スキーマ、CRUD、APIは別々のファイルに分離
+  - モデル、スキーマ、CRUD、ツール、リソースは別々のファイルに分離
   - 各ディレクトリに`__init__.py`を配置
 
-#### 4. API設計原則
-- RESTfulな設計を採用
-- 適切なHTTPステータスコードを返す
-- エラーレスポンスは一貫した形式で返す
-- ページネーション、フィルタリング、ソートをサポート
+#### 4. MCP設計原則
+- ツールは明確な単一の操作を実行
+- リソースは読み取り専用のデータアクセス
+- 適切なエラーハンドリングとメッセージ
+- 型ヒントとdocstringによる明確な仕様定義
 
 #### 5. データベース設計
 - 正規化を適切に行う
@@ -117,21 +122,21 @@ devlog/
 
 ##### テスト作成のガイドライン
 - **テストファイルの命名規則**
-  - `test_<対象ファイル名>.py`（例: `test_project_crud.py`）
-  - テストクラス: `Test<対象クラス名>`（例: `TestProjectCRUD`）
+  - `test_<対象ファイル名>.py`（例: `test_project_tools.py`）
+  - テストクラス: `Test<対象クラス名>`（例: `TestProjectTools`）
   - テスト関数: `test_<テスト内容>`（例: `test_create_project_success`）
 
 - **テストの構造（AAA パターン）**
   ```python
-  def test_example():
+  async def test_example():
       # Arrange（準備）: テストデータやモックの設定
       test_data = {"name": "Test Project"}
       
       # Act（実行）: テスト対象の処理を実行
-      result = create_project(test_data)
+      result = await create_project(test_data)
       
       # Assert（検証）: 期待する結果を確認
-      assert result.name == "Test Project"
+      assert result["name"] == "Test Project"
   ```
 
 - **テストケースの網羅性**
@@ -144,6 +149,7 @@ devlog/
   - pytestのフィクスチャを使用してテストデータを管理
   - データベースのセットアップ/クリーンアップ
   - 共通のテストデータの再利用
+  - FastMCPクライアントのモック
 
 - **モックとスタブ**
   - 外部依存（API、データベース）はモック化
@@ -171,10 +177,10 @@ devlog/
 ##### テストコマンド
 ```bash
 # 特定のテストファイルを実行
-pytest tests/test_project_crud.py -v
+pytest tests/test_project_tools.py -v
 
 # 特定のテスト関数を実行
-pytest tests/test_project_crud.py::test_create_project -v
+pytest tests/test_project_tools.py::test_create_project -v
 
 # カバレッジレポート付きで実行
 pytest --cov=app --cov-report=html
@@ -190,12 +196,13 @@ pytest-watch
 - 適切な例外処理を実装
 - ユーザーフレンドリーなエラーメッセージ
 - ログ出力による問題の追跡可能性確保
+- MCPコンテキストを使用したログ送信
 
 #### 8. セキュリティ考慮事項
 - SQLインジェクション対策（ORMの使用）
 - 入力値の適切なバリデーション
 - 環境変数による機密情報の管理
-- CORS設定の適切な実装
+- 必要に応じてMCP認証の実装
 
 ### コミット規約
 - feat: 新機能追加
@@ -209,5 +216,5 @@ pytest-watch
 ### 注意事項
 - マイグレーションは必ず実行前に確認する
 - 本番環境へのデプロイ前に全テストを実行する
-- APIの破壊的変更は避ける（バージョニングを検討）
+- MCPツールの破壊的変更は避ける
 - パフォーマンスを意識した実装を心がける
