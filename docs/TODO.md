@@ -31,11 +31,11 @@
 
 ### データベース接続設定
 
-- [ ] `app/db/database.py` の作成
-  - [ ] SQLAlchemy エンジンの設定
-  - [ ] SessionLocal の作成
-  - [ ] Base クラスの定義
-  - [ ] get_db 依存関数の実装
+- [x] `app/db/database.py` の作成
+  - [x] SQLAlchemy エンジンの設定
+  - [x] SessionLocal の作成
+  - [x] Base クラスの定義
+  - [x] get_db 依存関数の実装
 
 ### モデル定義
 
