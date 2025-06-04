@@ -39,15 +39,15 @@
 
 ### モデル定義
 
-- [ ] `app/models/__init__.py` の作成
-- [ ] `app/models/project.py` の作成
-  - [ ] Project モデルの定義（id, name, description, created_at, updated_at）
-- [ ] `app/models/task.py` の作成
-  - [ ] Task モデルの定義（id, title, description, status, project_id, assignee_id, created_at, updated_at）
-- [ ] `app/models/user.py` の作成
-  - [ ] User モデルの定義（id, username, email, created_at）
-- [ ] `app/models/message.py` の作成
-  - [ ] Message モデルの定義（id, content, message_type, user_id, task_id, project_id, parent_id, created_at）
+- [x] `app/models/__init__.py` の作成
+- [x] `app/models/project.py` の作成
+  - [x] Project モデルの定義（id, name, description, created_at, updated_at）
+- [x] `app/models/task.py` の作成
+  - [x] Task モデルの定義（id, title, description, status, project_id, assignee_id, created_at, updated_at）
+- [x] `app/models/user.py` の作成
+  - [x] User モデルの定義（id, username, email, created_at）
+- [x] `app/models/message.py` の作成
+  - [x] Message モデルの定義（id, content, message_type, user_id, task_id, project_id, parent_id, created_at）
 
 ### Alembic 設定
 
@@ -153,11 +153,11 @@
 
 ### 単体テスト
 
-- [ ] `tests/test_models.py` の作成
-  - [ ] Project モデルのテスト
-  - [ ] Task モデルのテスト
-  - [ ] User モデルのテスト
-  - [ ] Message モデルのテスト
+- [x] `tests/test_models.py` の作成
+  - [x] Project モデルのテスト
+  - [x] Task モデルのテスト
+  - [x] User モデルのテスト
+  - [x] Message モデルのテスト
 
 ### 統合テスト
 
