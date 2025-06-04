@@ -23,22 +23,7 @@ Slack 風の開発状況共有サービスのためのバックエンド API で
 
 ## 🛠️ セットアップ手順
 
-### 1. リポジトリのクローン
-
-```bash
-git clone https://github.com/your-org/dev-status-api.git
-cd dev-status-api
-```
-
-### 2. 仮想環境と依存ライブラリのインストール
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Windowsなら venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 3. .env ファイルの作成
+### 1. .env ファイルの作成
 
 `.env` ファイルに以下のような内容を記述してください：
 
