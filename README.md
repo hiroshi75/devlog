@@ -174,10 +174,22 @@ TDD（テスト駆動開発）で実装を進めています：
 
 ```bash
 # テストの実行
-pytest
+uv run pytest
+
+# 詳細な出力でテスト実行
+uv run pytest -v
 
 # カバレッジ付きテスト
-pytest --cov=app --cov-report=html
+uv run pytest --cov=app --cov-report=html
+
+# 特定のテストファイルのみ実行
+uv run pytest tests/test_models.py
+
+# 特定のテストクラスのみ実行
+uv run pytest tests/test_models.py::TestProjectModel
+
+# 特定のテスト関数のみ実行
+uv run pytest tests/test_models.py::TestProjectModel::test_create_project_success
 ```
 
 ---
