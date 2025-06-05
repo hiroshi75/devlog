@@ -209,15 +209,15 @@
 ### MCP サーバー仕様書
 
 - [x] FastMCP 基本ガイドの作成
-- [ ] ツール一覧と使用例の作成
-- [ ] リソース一覧と使用例の作成
-- [ ] Claude Desktop / Cursor での設定手順
+- [x] ツール一覧と使用例の作成 (`docs/tools_guide.md`)
+- [x] リソース一覧と使用例の作成 (`docs/resources_guide.md`)
+- [x] Claude Desktop / Cursor での設定手順 (`docs/setup_guide.md`)
 
 ### 開発ドキュメント
 
-- [ ] 環境構築手順の詳細化
+- [x] 環境構築手順の詳細化 (`docs/setup_guide.md` に含まれる)
 - [ ] デプロイ手順の作成
-- [ ] トラブルシューティングガイド
+- [ ] トラブルシューティングガイド (`docs/setup_guide.md` に基本的な内容を含む)
 
 ## 🚀 デプロイ準備
 

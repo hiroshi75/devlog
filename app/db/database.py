@@ -15,7 +15,7 @@ load_dotenv()
 
 # データベースURLを環境変数から取得（デフォルトはSQLite）
 SQLALCHEMY_DATABASE_URL: str = os.getenv(
-    "DATABASE_URL",
+    "DEVLOG_DATABASE_URL",
     "sqlite:///./devlog.db"
 )
 
@@ -31,7 +31,7 @@ engine: Engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args=connect_args,
     # 開発環境ではSQLログを出力（本番環境では無効化すること）
-    echo=bool(os.getenv("DEBUG", False))
+    echo=bool(os.getenv("DEVLOG_DEBUG", False))
 )
 
 # セッションファクトリの作成

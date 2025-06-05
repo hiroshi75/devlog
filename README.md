@@ -38,13 +38,13 @@ pip install fastmcp sqlalchemy alembic psycopg2-binary python-dotenv
 `.env` ファイルに以下のような内容を記述してください：
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost/devstatus
+DEVLOG_DATABASE_URL=postgresql://user:password@localhost/devstatus
 ```
 
 ※ SQLite を使う場合は：
 
 ```env
-DATABASE_URL=sqlite:///./devstatus.db
+DEVLOG_DATABASE_URL=sqlite:///./devstatus.db
 ```
 
 ### 3. データベース初期化

@@ -24,7 +24,7 @@ from app.models import project, task, user, message  # モデルをインポー�
 config = context.config
 
 # 環境変数からデータベースURLを設定
-config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL", "sqlite:///./devlog.db"))
+config.set_main_option("sqlalchemy.url", os.getenv("DEVLOG_DATABASE_URL", "sqlite:///./devlog.db"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
