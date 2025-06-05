@@ -28,7 +28,7 @@ class MessageBase(BaseModel):
     content: str = Field(..., min_length=1, description="メッセージ内容")
     message_type: MessageType = Field(..., description="メッセージタイプ")
     user_id: int = Field(..., description="投稿者ID")
-    project_id: int = Field(..., description="プロジェクトID")
+    project_id: Optional[int] = Field(None, description="プロジェクトID")
     task_id: Optional[int] = Field(None, description="関連タスクID")
     parent_id: Optional[int] = Field(None, description="親メッセージID（スレッド用）")
 

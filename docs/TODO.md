@@ -111,33 +111,33 @@
 
 ### MCP ツール実装
 
-- [ ] `app/tools/__init__.py` の作成
-- [ ] `app/tools/project_tools.py` の作成
-  - [ ] create_project ツール
-  - [ ] get_projects ツール
-  - [ ] get_project ツール
-  - [ ] update_project ツール
-  - [ ] delete_project ツール
-- [ ] `app/tools/task_tools.py` の作成
-  - [ ] create_task ツール
-  - [ ] get_tasks ツール
-  - [ ] get_task ツール
-  - [ ] update_task ツール
-  - [ ] delete_task ツール
-- [ ] `app/tools/user_tools.py` の作成
-  - [ ] create_user ツール
-  - [ ] get_users ツール
-  - [ ] get_user ツール
-- [ ] `app/tools/message_tools.py` の作成
-  - [ ] create_message ツール
-  - [ ] get_messages ツール
-  - [ ] get_message ツール
+- [x] `app/tools/__init__.py` の作成
+- [x] `app/tools/project_tools.py` の作成
+  - [x] create_project ツール
+  - [x] get_projects ツール
+  - [x] get_project ツール
+  - [x] update_project ツール
+  - [x] delete_project ツール
+- [x] `app/tools/task_tools.py` の作成
+  - [x] create_task ツール
+  - [x] get_tasks ツール
+  - [x] get_task ツール
+  - [x] update_task ツール
+  - [x] delete_task ツール
+- [x] `app/tools/user_tools.py` の作成
+  - [x] create_user ツール
+  - [x] get_users ツール
+  - [x] get_user ツール
+- [x] `app/tools/message_tools.py` の作成
+  - [x] create_message ツール
+  - [x] get_messages ツール
+  - [x] get_message ツール
 
 ### MCP リソース実装
 
-- [ ] `app/resources/__init__.py` の作成
-- [ ] `app/resources/project_resources.py` の作成
-  - [ ] project://{project_id} リソース
+- [x] `app/resources/__init__.py` の作成
+- [x] `app/resources/project_resources.py` の作成
+  - [x] project://{project_id} リソース
 - [ ] `app/resources/task_resources.py` の作成
   - [ ] task://{task_id} リソース
 - [ ] `app/resources/user_resources.py` の作成
@@ -174,16 +174,26 @@
 
 ### MCP ツールテスト
 
-- [ ] `tests/test_project_tools.py` の作成
-  - [ ] プロジェクト関連ツールのテスト
-- [ ] `tests/test_task_tools.py` の作成
-  - [ ] タスク関連ツールのテスト
-- [ ] `tests/test_user_tools.py` の作成
-  - [ ] ユーザー関連ツールのテスト
-- [ ] `tests/test_message_tools.py` の作成
-  - [ ] メッセージ関連ツールのテスト
+- [x] `tests/test_project_tools.py` の作成
+  - [x] プロジェクト関連ツールのテスト
+- [x] `tests/test_task_tools.py` の作成
+  - [x] タスク関連ツールのテスト
+- [x] `tests/test_user_tools.py` の作成
+  - [x] ユーザー関連ツールのテスト
+- [x] `tests/test_message_tools.py` の作成
+  - [x] メッセージ関連ツールのテスト
 
 ### MCP リソーステスト
+
+- [x] `tests/test_project_resources.py` の作成
+  - [x] プロジェクトリソースのテスト
+- [ ] `tests/test_task_resources.py` の作成
+  - [ ] タスクリソースのテスト
+- [ ] `tests/test_user_resources.py` の作成
+  - [ ] ユーザーリソースのテスト
+- [ ] `tests/test_message_resources.py` の作成
+
+  - [ ] メッセージリソースのテスト
 
 - [ ] `tests/test_resources.py` の作成
   - [ ] 各リソースのテスト
@@ -234,4 +244,4 @@
 1. 各タスクは完了したらチェックボックスにチェックを入れる
 2. 新しい課題が見つかったら、適切なセクションに追加する
 3. 優先度の高いタスクから順に実施する
-4. テストは各機能実装後に必ず作成する（TDD 推奨）
+4. テストは各機能実装前に必ず作成する（TDD 推奨）
