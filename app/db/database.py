@@ -74,4 +74,19 @@ def get_db() -> Generator[Session, None, None]:
     try:
         yield db
     finally:
-        db.close() 
+        db.close()
+
+
+def init_db() -> None:
+    """
+    データベースの初期化
+    
+    全てのモデルのテーブルを作成します。
+    アプリケーション起動時に実行されます。
+    
+    Note:
+        本番環境では、Alembicマイグレーションを使用することを推奨します。
+        この関数は開発環境やテスト環境での利用を想定しています。
+    """
+    from app.models import project, task, user, message  # Import all models
+    Base.metadata.create_all(bind=engine) 

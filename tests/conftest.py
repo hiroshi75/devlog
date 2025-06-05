@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.db.database import Base, get_db
-from app.main import app
 
 # すべてのモデルをインポートして、リレーションシップが正しく解決されるようにする
 from app.models import Project, Task, User, Message  # noqa: F401
@@ -42,18 +41,33 @@ def db():
 
 
 @pytest.fixture
-def client(db):
-    """テスト用のFastAPIクライアント"""
+def mcp_client(db):
+    """テスト用のMCPクライアント（モック）"""
+    # Override database dependency for testing
+    import app.tools.project_tools
+    import app.tools.task_tools
+    import app.tools.user_tools
+    import app.tools.message_tools
+    
+    # Mock the get_db function in all tool modules
     def override_get_db():
         try:
             yield db
         finally:
             pass
     
-    app.dependency_overrides[get_db] = override_get_db
+    # Override get_db in all modules that use it
+    original_get_db = get_db
+    app.tools.project_tools.get_db = lambda: [db]
+    app.tools.task_tools.get_db = lambda: [db]
+    app.tools.user_tools.get_db = lambda: [db]
+    app.tools.message_tools.get_db = lambda: [db]
     
-    from fastapi.testclient import TestClient
-    with TestClient(app) as test_client:
-        yield test_client
-    
-    app.dependency_overrides.clear() 
+    try:
+        yield db  # Return db session for direct testing
+    finally:
+        # Restore original get_db function
+        app.tools.project_tools.get_db = original_get_db
+        app.tools.task_tools.get_db = original_get_db
+        app.tools.user_tools.get_db = original_get_db
+        app.tools.message_tools.get_db = original_get_db 
