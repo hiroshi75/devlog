@@ -138,12 +138,12 @@
 - [x] `app/resources/__init__.py` の作成
 - [x] `app/resources/project_resources.py` の作成
   - [x] project://{project_id} リソース
-- [ ] `app/resources/task_resources.py` の作成
-  - [ ] task://{task_id} リソース
-- [ ] `app/resources/user_resources.py` の作成
-  - [ ] user://{user_id} リソース
-- [ ] `app/resources/message_resources.py` の作成
-  - [ ] messages://recent リソース
+- [x] `app/resources/task_resources.py` の作成
+  - [x] task://{task_id} リソース
+- [x] `app/resources/user_resources.py` の作成
+  - [x] user://{user_id} リソース
+- [x] `app/resources/message_resources.py` の作成
+  - [x] messages://recent リソース
 
 ### メインアプリケーション
 
@@ -187,16 +187,12 @@
 
 - [x] `tests/test_project_resources.py` の作成
   - [x] プロジェクトリソースのテスト
-- [ ] `tests/test_task_resources.py` の作成
-  - [ ] タスクリソースのテスト
-- [ ] `tests/test_user_resources.py` の作成
-  - [ ] ユーザーリソースのテスト
-- [ ] `tests/test_message_resources.py` の作成
-
-  - [ ] メッセージリソースのテスト
-
-- [ ] `tests/test_resources.py` の作成
-  - [ ] 各リソースのテスト
+- [x] `tests/test_task_resources.py` の作成
+  - [x] タスクリソースのテスト
+- [x] `tests/test_user_resources.py` の作成
+  - [x] ユーザーリソースのテスト
+- [x] `tests/test_message_resources.py` の作成
+  - [x] メッセージリソースのテスト
 
 ## 📚 ドキュメント
 
