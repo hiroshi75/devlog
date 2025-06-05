@@ -1,5 +1,10 @@
 """
-Task-related MCP tools for DevStatusMCP
+Task-related MCP tools for DevLog
+
+This module provides task management functionality including:
+- Task creation and assignment
+- Task status updates and tracking
+- Task dependencies and relationships
 """
 
 from typing import Optional, List, Dict, Any

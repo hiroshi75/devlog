@@ -1,10 +1,28 @@
 """
-DevStatusMCP - FastMCP Server for Development Status Management
+DevLog - FastMCP Server for Development Status Management
 
-A Slack-like development status sharing service MCP server that enables
-centralized management of multi-person, multi-project development progress
-through message-based communication with LLM integration.
+This module provides the main FastMCP server implementation for DevLog,
+a Slack-like development status sharing service.
+
+Features:
+- Project and task management
+- User management and authentication
+- Real-time messaging and status updates
+- SQLAlchemy ORM with PostgreSQL/SQLite support
+- Comprehensive MCP tools and resources
+
+Usage:
+    python -m app.main
+
+Environment Variables:
+    DEVLOG_DATABASE_URL: Database connection URL
+    DEVLOG_DEBUG: Enable debug mode (default: False)
+    DEVLOG_LOG_LEVEL: Logging level (default: INFO)
 """
+
+import logging
+import os
+from typing import Any, Dict
 
 from fastmcp import FastMCP
 from app.db.database import init_db
@@ -41,8 +59,17 @@ from app.resources import (
     messages_recent_resource_handler,
 )
 
-# Initialize FastMCP server
-mcp = FastMCP("DevStatusMCP")
+# Configure logging
+log_level = os.getenv("DEVLOG_LOG_LEVEL", "INFO").upper()
+logging.basicConfig(
+    level=getattr(logging, log_level),
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+
+logger = logging.getLogger(__name__)
+
+# Create FastMCP instance
+mcp = FastMCP("DevLog")
 
 # Initialize database on startup
 init_db()

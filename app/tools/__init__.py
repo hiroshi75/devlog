@@ -1,7 +1,7 @@
 """
-MCP Tools Package
+MCP Tools Package for DevLog
 
-This package contains all MCP tool implementations for DevStatusMCP.
+This package contains all MCP tool implementations for DevLog.
 """
 
 from .project_tools import (

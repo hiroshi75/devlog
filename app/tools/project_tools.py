@@ -1,5 +1,10 @@
 """
-Project-related MCP tools for DevStatusMCP
+Project-related MCP tools for DevLog
+
+This module provides project management functionality including:
+- Project creation and deletion
+- Project information retrieval
+- Project status and metadata management
 """
 
 from typing import Optional, List, Dict, Any

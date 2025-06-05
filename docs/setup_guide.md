@@ -1,8 +1,8 @@
-# DevStatusMCP 設定ガイド
+# DevLog 設定ガイド
 
-**DevStatusMCP** を各種 MCP クライアントで使用するための設定手順です。
+**DevLog** を各種 MCP クライアントで使用するための設定手順です。
 
-> **🎯 重要: DevStatusMCP は標準的な MCP サーバーです**  
+> **🎯 重要: DevLog は標準的な MCP サーバーです**  
 > Claude Desktop、Cline、その他の MCP 対応クライアントから利用できます。
 
 ## 📋 目次
@@ -21,7 +21,7 @@
 
 ## 🚀 MCP クライアント対応状況
 
-DevStatusMCP は **標準的な MCP サーバー** として実装されており、以下のクライアントで利用可能です：
+DevLog は **標準的な MCP サーバー** として実装されており、以下のクライアントで利用可能です：
 
 | クライアント              | 対応状況    | 設定の簡単さ | 推奨度    |
 | ------------------------- | ----------- | ------------ | --------- |
@@ -56,7 +56,7 @@ DevStatusMCP は **標準的な MCP サーバー** として実装されてお�
    - PostgreSQL 推奨（本番環境）
    - SQLite 可（開発環境）
 
-### DevStatusMCP プロジェクトのセットアップ
+### DevLog プロジェクトのセットアップ
 
 1. **リポジトリのクローンまたはダウンロード**
 
@@ -88,10 +88,10 @@ touch .env
 
 ```env
 # データベース設定
-DEVLOG_DATABASE_URL=postgresql://username:password@localhost:5432/devstatusmcp
+DEVLOG_DATABASE_URL=postgresql://username:password@localhost:5432/devlog
 
 # または SQLite を使用する場合
-# DEVLOG_DATABASE_URL=sqlite:///./devstatusmcp.db
+# DEVLOG_DATABASE_URL=sqlite:///./devlog.db
 
 # デバッグモード（開発時のみ）
 DEVLOG_DEBUG=true
@@ -119,11 +119,11 @@ DEVLOG_LOG_LEVEL=INFO
    psql postgres
 
    # データベースの作成
-   CREATE DATABASE devstatusmcp;
+   CREATE DATABASE devlog;
 
    # ユーザーの作成（オプション）
    CREATE USER devuser WITH PASSWORD 'your_password';
-   GRANT ALL PRIVILEGES ON DATABASE devstatusmcp TO devuser;
+   GRANT ALL PRIVILEGES ON DATABASE devlog TO devuser;
 
    # 接続テスト
    \q
@@ -135,7 +135,7 @@ DEVLOG_LOG_LEVEL=INFO
 
 ```env
 # .env ファイル
-DEVLOG_DATABASE_URL=sqlite:///./devstatusmcp.db
+DEVLOG_DATABASE_URL=sqlite:///./devlog.db
 DEVLOG_DEBUG=true
 DEVLOG_LOG_LEVEL=DEBUG
 ```
@@ -158,7 +158,7 @@ alembic upgrade head
 psql $DEVLOG_DATABASE_URL -c "\dt"
 
 # SQLite の場合
-sqlite3 devstatusmcp.db ".tables"
+sqlite3 devlog.db ".tables"
 ```
 
 ---
@@ -187,19 +187,19 @@ notepad %APPDATA%\Claude\claude_desktop_config.json
 nano ~/.config/Claude/claude_desktop_config.json
 ```
 
-### 2. DevStatusMCP サーバーの設定を追加
+### 2. DevLog サーバーの設定を追加
 
 設定ファイルに以下の内容を追加：
 
 ```json
 {
   "mcpServers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "/path/to/your/devlog",
       "env": {
-        "DEVLOG_DATABASE_URL": "postgresql://username:password@localhost:5432/devstatusmcp"
+        "DEVLOG_DATABASE_URL": "postgresql://username:password@localhost:5432/devlog"
       }
     }
   }
@@ -213,12 +213,12 @@ nano ~/.config/Claude/claude_desktop_config.json
 ```json
 {
   "mcpServers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "/Users/username/projects/devlog",
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devstatusmcp.db"
+        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
       }
     }
   }
@@ -244,12 +244,12 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
 ```json
 {
   "mcpServers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "/path/to/devlog",
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devstatusmcp.db"
+        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
       }
     }
   }
@@ -263,7 +263,7 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
 ```json
 {
   "cline.mcpServers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "${workspaceFolder}/devlog"
@@ -284,12 +284,12 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
 {
   "mcpServers": [
     {
-      "name": "devstatusmcp",
+      "name": "devlog",
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "/path/to/devlog",
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devstatusmcp.db"
+        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
       }
     }
   ]
@@ -303,12 +303,12 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
 ```json
 {
   "servers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "uv",
       "args": ["run", "python", "-m", "app.main"],
       "cwd": "/absolute/path/to/devlog",
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devstatusmcp.db"
+        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
       }
     }
   }
@@ -335,10 +335,10 @@ CMD ["uv", "run", "python", "-m", "app.main"]
 ```yaml
 version: "3.8"
 services:
-  devstatusmcp:
+  devlog:
     build: .
     environment:
-      - DEVLOG_DATABASE_URL=postgresql://user:pass@db:5432/devstatusmcp
+      - DEVLOG_DATABASE_URL=postgresql://user:pass@db:5432/devlog
     volumes:
       - ./data:/app/data
 ```
@@ -348,11 +348,11 @@ services:
 ```json
 {
   "mcpServers": {
-    "devstatusmcp": {
+    "devlog": {
       "command": "docker",
-      "args": ["run", "--rm", "-i", "devstatusmcp"],
+      "args": ["run", "--rm", "-i", "devlog"],
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./data/devstatusmcp.db"
+        "DEVLOG_DATABASE_URL": "sqlite:///./data/devlog.db"
       }
     }
   }
@@ -367,12 +367,12 @@ services:
 
 1. **Claude Desktop を再起動**
 2. **新しい会話を開始**
-3. **DevStatusMCP ツールのテスト**：
+3. **DevLog ツールのテスト**：
 
 ```
-DevStatusMCP でプロジェクトを作成してください：
+DevLog でプロジェクトを作成してください：
 - 名前: "テストプロジェクト"
-- 説明: "DevStatusMCP の動作確認用プロジェクト"
+- 説明: "DevLog の動作確認用プロジェクト"
 ```
 
 4. **期待される応答**：
@@ -385,7 +385,7 @@ DevStatusMCP でプロジェクトを作成してください：
 VS Code で Cline を開き、以下をテスト：
 
 ```
-DevStatusMCP を使ってタスクを作成してください
+DevLog を使ってタスクを作成してください
 ```
 
 ### 3. リソースのテスト
@@ -407,11 +407,11 @@ project://1 の情報を確認してください
 # プロジェクトディレクトリで実行
 cd /path/to/devlog
 
-# DevStatusMCP サーバーを手動起動
+# DevLog サーバーを手動起動
 uv run python -m app.main
 
 # 正常に起動すれば以下のようなメッセージが表示される
-# DevStatusMCP server starting...
+# DevLog server starting...
 # Server running on stdio
 ```
 
@@ -513,8 +513,8 @@ journalctl -u claude-desktop -f
 
 ## 📚 関連ドキュメント
 
-- [ツールガイド](tools_guide.md) - DevStatusMCP の全 16 ツール
-- [リソースガイド](resources_guide.md) - DevStatusMCP の 4 リソース
+- [ツールガイド](tools_guide.md) - DevLog の全 16 ツール
+- [リソースガイド](resources_guide.md) - DevLog の 4 リソース
 - [FastMCP ガイド](fastmcp_guide.md) - 開発環境のセットアップ
 
 ---
@@ -542,7 +542,7 @@ journalctl -u claude-desktop -f
 
 ---
 
-## 💡 DevStatusMCP 活用のヒント
+## 💡 DevLog 活用のヒント
 
 - **複数環境**: 開発・テスト・本番環境で別々のデータベースを使用
 - **バックアップ**: 定期的にデータベースのバックアップを取得

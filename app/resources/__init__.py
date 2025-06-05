@@ -1,7 +1,7 @@
 """
-MCP Resources Package
+MCP Resources Package for DevLog
 
-This package contains all MCP resource implementations for DevStatusMCP.
+This package contains all MCP resource implementations for DevLog.
 """
 
 from .project_resources import project_resource_handler

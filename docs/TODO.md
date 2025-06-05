@@ -1,4 +1,4 @@
-# DevStatusMCP 開発 TODO
+# DevLog 開発 TODO
 
 ## 🏗️ プロジェクト初期設定
 

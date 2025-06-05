@@ -1,5 +1,10 @@
 """
-Project-related MCP resources for DevStatusMCP
+Project-related MCP resources for DevLog
+
+This module provides read-only access to project information including:
+- Project details and metadata
+- Project statistics and status
+- Project member and task relationships
 """
 
 from typing import Dict, Any, Optional

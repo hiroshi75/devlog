@@ -1,5 +1,10 @@
 """
-Message-related MCP tools for DevStatusMCP
+Message-related MCP tools for DevLog
+
+This module provides messaging functionality including:
+- Message creation and posting
+- Thread management
+- Real-time communication features
 """
 
 from typing import Optional, List, Dict, Any

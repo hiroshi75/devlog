@@ -1,5 +1,10 @@
 """
-Task-related MCP resources for DevStatusMCP
+Task-related MCP resources for DevLog
+
+This module provides read-only access to task information including:
+- Task details and status
+- Task dependencies and relationships
+- Task progress and history
 """
 
 from typing import Dict, Any, Optional

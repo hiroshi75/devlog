@@ -1,5 +1,10 @@
 """
-Message-related MCP resources for DevStatusMCP
+Message-related MCP resources for DevLog
+
+This module provides read-only access to message information including:
+- Message content and metadata
+- Thread and conversation history
+- Message search and filtering
 """
 
 from typing import Dict, Any, Optional, List

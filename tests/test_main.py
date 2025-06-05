@@ -12,7 +12,7 @@ def test_mcp_server_creation():
     from app.main import mcp
     
     assert isinstance(mcp, FastMCP)
-    assert mcp.name == "DevStatusMCP"
+    assert mcp.name == "DevLog"
 
 
 @pytest.mark.asyncio

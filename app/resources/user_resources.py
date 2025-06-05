@@ -1,5 +1,10 @@
 """
-User-related MCP resources for DevStatusMCP
+User-related MCP resources for DevLog
+
+This module provides read-only access to user information including:
+- User profiles and basic information
+- User activity and status
+- User relationships and permissions
 """
 
 from typing import Dict, Any, Optional, Union

@@ -1,5 +1,10 @@
 """
-User-related MCP tools for DevStatusMCP
+User-related MCP tools for DevLog
+
+This module provides user management functionality including:
+- User registration and authentication  
+- User profile management
+- User status and activity tracking
 """
 
 import re
