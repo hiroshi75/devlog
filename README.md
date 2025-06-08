@@ -27,10 +27,16 @@ Slack 風の開発状況共有サービスのための MCP（Model Context Proto
 
 ```bash
 # uvを使用（推奨）
-uv add fastmcp sqlalchemy alembic psycopg2-binary python-dotenv
+uv sync
 
 # または pip を使用
-pip install fastmcp sqlalchemy alembic psycopg2-binary python-dotenv
+pip install -e .
+```
+
+新規に依存関係を追加する場合：
+
+```bash
+uv add パッケージ名
 ```
 
 ### 2. .env ファイルの作成
@@ -157,12 +163,15 @@ devlog/
 │   ├── crud/             # CRUD操作ロジック
 │   ├── tools/            # MCPツール定義
 │   ├── resources/        # MCPリソース定義
+│   ├── api/              # API関連コード
 │   └── db/               # DB接続・初期化
 ├── tests/                # テストコード
 ├── alembic/              # マイグレーション管理
 ├── docs/                 # ドキュメント
 │   ├── TODO.md          # 開発タスク管理
 │   └── fastmcp_guide.md # FastMCP基本ガイド
+├── pyproject.toml        # プロジェクト設定・依存関係
+├── uv.lock               # 依存関係ロックファイル
 └── README.md
 ```
 
