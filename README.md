@@ -28,15 +28,30 @@ Slack 風の開発状況共有サービスのための MCP（Model Context Proto
 ```bash
 # uvを使用（推奨）
 uv sync
-
-# または pip を使用
-pip install -e .
 ```
 
-新規に依存関係を追加する場合：
+## 🤖 Claude Desktop / Cursor での使用
 
-```bash
-uv add パッケージ名
+```json
+{
+  "mcpServers": {
+    "devlog": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
+      "env": {
+        "DEVLOG_DATABASE_URL": "sqlite:////path/to/devlog/devlog.db",
+        "PYTHONPATH": "/path/to/devlog"
+      }
+    }
+  }
+}
 ```
 
 ### 2. .env ファイルの作成
@@ -75,14 +90,6 @@ fastmcp run app/main.py:mcp
 # デバッグモード
 fastmcp run app/main.py:mcp --log-level DEBUG
 ```
-
-### MCP インスペクターでテスト
-
-```bash
-mcp dev app/main.py
-```
-
-ブラウザで [http://localhost:5173](http://localhost:5173) にアクセスして、ツールやリソースをテストできます。
 
 ---
 
@@ -124,31 +131,6 @@ mcp dev app/main.py
 - `task://{task_id}` - タスク情報
 - `user://{user_id}` - ユーザー情報
 - `messages://recent` - 最近のメッセージ一覧
-
----
-
-## 🤖 Claude Desktop / Cursor での使用
-
-### Claude Desktop へのインストール
-
-```bash
-fastmcp install app/main.py
-```
-
-### Cursor での設定
-
-`~/.cursor/mcp.json` に以下を追加：
-
-```json
-{
-  "mcpServers": {
-    "devstatus": {
-      "command": "uv",
-      "args": ["--directory", "/path/to/devlog", "run", "app/main.py"]
-    }
-  }
-}
-```
 
 ---
 
