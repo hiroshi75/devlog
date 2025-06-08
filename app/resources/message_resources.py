@@ -9,7 +9,7 @@ This module provides read-only access to message information including:
 
 from typing import Dict, Any, Optional, List
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.models.message import Message as MessageModel
 from app import crud
 
@@ -36,7 +36,7 @@ def messages_recent_resource_handler(
     Returns:
         Recent messages information as dictionary
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Get messages with filters
         messages = crud.message.get_messages(

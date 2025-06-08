@@ -51,6 +51,15 @@ def delete_project(db: Session, project_id: int) -> bool:
     if db_project is None:
         return False
     
+    # 関連するタスクを削除
+    from app.models.task import Task
+    db.query(Task).filter(Task.project_id == project_id).delete()
+    
+    # 関連するメッセージのproject_idをNullに設定
+    from app.models.message import Message
+    db.query(Message).filter(Message.project_id == project_id).update({"project_id": None})
+    
+    # プロジェクトを削除
     db.delete(db_project)
     db.commit()
     return True 

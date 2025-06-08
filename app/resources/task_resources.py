@@ -9,7 +9,7 @@ This module provides read-only access to task information including:
 
 from typing import Dict, Any, Optional
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.models.task import Task as TaskModel
 from app import crud
 
@@ -39,7 +39,7 @@ def task_resource_handler(
     except (ValueError, TypeError):
         raise ValueError(f"Invalid task ID: {task_id}")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Get task
         task = crud.task.get_task(db=db, task_id=task_id)

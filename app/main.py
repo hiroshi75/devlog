@@ -106,7 +106,7 @@ def create_task(
     title: str,
     project_id: int,
     description: str = None,
-    status: str = "todo",
+    status: str = "pending",
     assignee_id: int = None
 ) -> dict:
     """Create a new task"""
@@ -246,4 +246,4 @@ def messages_resource(type: str) -> str:
         return f"Message type '{type}' is not supported. Available types: recent"
 
 if __name__ == "__main__":
-    mcp.run() 
+    mcp.run()

@@ -9,7 +9,7 @@ This module provides read-only access to user information including:
 
 from typing import Dict, Any, Optional, Union
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.models.user import User as UserModel
 from app import crud
 
@@ -35,7 +35,7 @@ def user_resource_handler(
     Raises:
         ValueError: If user identifier is invalid or user not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Get user based on lookup type
         if lookup_by_username:

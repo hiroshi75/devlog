@@ -73,6 +73,68 @@ DevLog は **標準的な MCP サーバー** として実装されており、�
 
 ---
 
+## ⚡ 設定のポイント
+
+DevLog を MCP クライアントで正しく動作させるための重要なポイントです：
+
+### 🔧 正しいコマンド引数
+
+**推奨設定：**
+
+```json
+"args": [
+  "--directory",
+  "/absolute/path/to/devlog",
+  "run",
+  "--",
+  "python",
+  "app/main.py"
+]
+```
+
+**重要な点：**
+
+- `--directory` オプションで明示的にプロジェクトディレクトリを指定
+- `--` で uv のオプションと Python コマンドを分離
+- `python app/main.py` で直接ファイルを実行（`-m` オプション不要）
+
+### 🌍 必須環境変数
+
+```json
+"env": {
+  "DEVLOG_DATABASE_URL": "sqlite:////absolute/path/to/devlog/devlog.db",
+  "PYTHONPATH": "/absolute/path/to/devlog"
+}
+```
+
+**注意点：**
+
+- データベース URL は **絶対パス** で指定
+- SQLite の場合は `sqlite:////` で始める（スラッシュ 4 つ）
+- `PYTHONPATH` で Python モジュール検索パスを設定
+
+### 🚫 よくある間違い
+
+❌ **避けるべき設定：**
+
+```json
+// ダメな例
+"args": ["run", "python", "-m", "app.main"],  // -m オプション使用
+"cwd": "/path/to/devlog",                     // cwd に依存
+"DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"  // 相対パス
+```
+
+✅ **正しい設定：**
+
+```json
+// 良い例
+"args": ["--directory", "/path/to/devlog", "run", "--", "python", "app/main.py"],
+"DEVLOG_DATABASE_URL": "sqlite:////path/to/devlog/devlog.db",  // 絶対パス
+"PYTHONPATH": "/path/to/devlog"
+```
+
+---
+
 ## 🌍 環境変数の設定
 
 ### .env ファイルの作成
@@ -196,10 +258,17 @@ nano ~/.config/Claude/claude_desktop_config.json
   "mcpServers": {
     "devlog": {
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "/path/to/your/devlog",
+      "args": [
+        "--directory",
+        "/path/to/your/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
       "env": {
-        "DEVLOG_DATABASE_URL": "postgresql://username:password@localhost:5432/devlog"
+        "DEVLOG_DATABASE_URL": "postgresql://username:password@localhost:5432/devlog",
+        "PYTHONPATH": "/path/to/your/devlog"
       }
     }
   }
@@ -208,22 +277,36 @@ nano ~/.config/Claude/claude_desktop_config.json
 
 ### 3. パスの設定例
 
-**絶対パスで指定：**
+**絶対パス指定（推奨）：**
 
 ```json
 {
   "mcpServers": {
     "devlog": {
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "/Users/username/projects/devlog",
+      "args": [
+        "--directory",
+        "/Users/username/projects/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
+        "DEVLOG_DATABASE_URL": "sqlite:////Users/username/projects/devlog/devlog.db",
+        "PYTHONPATH": "/Users/username/projects/devlog"
       }
     }
   }
 }
 ```
+
+> **💡 重要なポイント:**
+>
+> - `--directory` オプションでプロジェクトディレクトリを指定
+> - `python app/main.py` で直接ファイルを実行（`-m` オプション不要）
+> - データベース URL は絶対パスで指定
+> - `PYTHONPATH` 環境変数で Python モジュール検索パスを設定
 
 ---
 
@@ -246,10 +329,17 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
   "mcpServers": {
     "devlog": {
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "/path/to/devlog",
+      "args": [
+        "--directory",
+        "/path/to/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
+        "DEVLOG_DATABASE_URL": "sqlite:////path/to/devlog/devlog.db",
+        "PYTHONPATH": "/path/to/devlog"
       }
     }
   }
@@ -265,8 +355,18 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
   "cline.mcpServers": {
     "devlog": {
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "${workspaceFolder}/devlog"
+      "args": [
+        "--directory",
+        "${workspaceFolder}/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
+      "env": {
+        "DEVLOG_DATABASE_URL": "sqlite:////${workspaceFolder}/devlog/devlog.db",
+        "PYTHONPATH": "${workspaceFolder}/devlog"
+      }
     }
   }
 }
@@ -286,10 +386,17 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
     {
       "name": "devlog",
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "/path/to/devlog",
+      "args": [
+        "--directory",
+        "/path/to/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
+        "DEVLOG_DATABASE_URL": "sqlite:////path/to/devlog/devlog.db",
+        "PYTHONPATH": "/path/to/devlog"
       }
     }
   ]
@@ -305,10 +412,17 @@ VS Code で `Ctrl+Shift+P` → "Cline: Open Settings" を選択。
   "servers": {
     "devlog": {
       "command": "uv",
-      "args": ["run", "python", "-m", "app.main"],
-      "cwd": "/absolute/path/to/devlog",
+      "args": [
+        "--directory",
+        "/absolute/path/to/devlog",
+        "run",
+        "--",
+        "python",
+        "app/main.py"
+      ],
       "env": {
-        "DEVLOG_DATABASE_URL": "sqlite:///./devlog.db"
+        "DEVLOG_DATABASE_URL": "sqlite:////absolute/path/to/devlog/devlog.db",
+        "PYTHONPATH": "/absolute/path/to/devlog"
       }
     }
   }
@@ -404,11 +518,12 @@ project://1 の情報を確認してください
 ### 4. 手動でのサーバー起動テスト
 
 ```bash
-# プロジェクトディレクトリで実行
-cd /path/to/devlog
+# プロジェクトディレクトリで実行（どのディレクトリからでも可）
+uv --directory /path/to/devlog run -- python app/main.py
 
-# DevLog サーバーを手動起動
-uv run python -m app.main
+# またはプロジェクトディレクトリに移動してから実行
+cd /path/to/devlog
+uv run -- python app/main.py
 
 # 正常に起動すれば以下のようなメッセージが表示される
 # DevLog server starting...
@@ -481,7 +596,10 @@ chmod +x /path/to/devlog
 ```bash
 # 手動でサーバーを起動してエラーを確認
 cd /path/to/devlog
-uv run python -m app.main
+uv run -- python app/main.py
+
+# または任意のディレクトリから
+uv --directory /path/to/devlog run -- python app/main.py
 ```
 
 #### 5. 環境変数が読み込まれない

@@ -7,9 +7,9 @@ This module provides read-only access to project information including:
 - Project member and task relationships
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.models.project import Project as ProjectModel
 from app import crud
 
@@ -37,7 +37,7 @@ def project_resource_handler(
     except (ValueError, TypeError):
         raise ValueError(f"Invalid project ID: {project_id}")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Get project
         project = crud.project.get_project(db=db, project_id=project_id)

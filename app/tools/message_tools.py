@@ -9,7 +9,7 @@ This module provides messaging functionality including:
 
 from typing import Optional, List, Dict, Any
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.schemas.message import MessageCreate
 from app.models.message import Message as MessageModel
 from app import crud
@@ -46,7 +46,7 @@ def create_message_tool(
     if user_id is None:
         raise ValueError("User ID is required")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         message_data = MessageCreate(
             content=content,
@@ -94,7 +94,7 @@ def get_messages_tool(
     Returns:
         List of messages matching the filters
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         messages = crud.message.get_messages(
             db=db,
@@ -136,7 +136,7 @@ def get_message_tool(message_id: int) -> Dict[str, Any]:
     Raises:
         ValueError: If message not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         message = crud.message.get_message(db=db, message_id=message_id)
         

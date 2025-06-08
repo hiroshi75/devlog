@@ -9,7 +9,7 @@ This module provides task management functionality including:
 
 from typing import Optional, List, Dict, Any
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.schemas.task import TaskCreate, TaskUpdate
 from app.models.task import Task as TaskModel
 from app import crud
@@ -17,41 +17,38 @@ from app import crud
 
 def create_task_tool(
     title: str,
+    project_id: int,
     description: Optional[str] = None,
-    project_id: Optional[int] = None,
-    assignee_id: Optional[int] = None,
-    status: str = "pending"
+    status: str = "pending",
+    assignee_id: Optional[int] = None
 ) -> Dict[str, Any]:
     """
     Create a new task
     
     Args:
         title: Task title
-        description: Task description (optional)
         project_id: Project ID this task belongs to
-        assignee_id: User ID of the assignee (optional)
+        description: Task description (optional)
         status: Task status (default: "pending")
+        assignee_id: User ID of the assignee (optional)
         
     Returns:
         Created task information
         
     Raises:
-        ValueError: If task title is empty or project_id is missing
+        ValueError: If task title is empty
     """
     if not title or not title.strip():
         raise ValueError("Task title is required")
     
-    if project_id is None:
-        raise ValueError("Project ID is required")
-    
-    db = next(get_db())
+    db = SessionLocal()
     try:
         task_data = TaskCreate(
             title=title,
             description=description,
+            status=status,
             project_id=project_id,
-            assignee_id=assignee_id,
-            status=status
+            assignee_id=assignee_id
         )
         task = crud.task.create_task(db=db, task=task_data)
         
@@ -85,7 +82,7 @@ def get_tasks_tool(
     Returns:
         List of tasks matching the filters
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         tasks = crud.task.get_tasks(
             db=db,
@@ -124,7 +121,7 @@ def get_task_tool(task_id: int) -> Dict[str, Any]:
     Raises:
         ValueError: If task not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         task = crud.task.get_task(db=db, task_id=task_id)
         
@@ -168,7 +165,7 @@ def update_task_tool(
     Raises:
         ValueError: If task not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Check if task exists
         existing_task = crud.task.get_task(db=db, task_id=task_id)
@@ -190,7 +187,7 @@ def update_task_tool(
         task = crud.task.update_task(
             db=db,
             task_id=task_id,
-            task_update=update_data
+            task=update_data
         )
         
         return {
@@ -220,7 +217,7 @@ def delete_task_tool(task_id: int) -> Dict[str, Any]:
     Raises:
         ValueError: If task not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Check if task exists
         existing_task = crud.task.get_task(db=db, task_id=task_id)

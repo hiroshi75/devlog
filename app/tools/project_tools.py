@@ -9,7 +9,7 @@ This module provides project management functionality including:
 
 from typing import Optional, List, Dict, Any
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.schemas.project import ProjectCreate, ProjectUpdate
 from app.models.project import Project as ProjectModel
 from app import crud
@@ -32,7 +32,7 @@ def create_project_tool(name: str, description: Optional[str] = None) -> Dict[st
     if not name or not name.strip():
         raise ValueError("Project name is required")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         project_data = ProjectCreate(name=name, description=description)
         project = crud.project.create_project(db=db, project=project_data)
@@ -55,7 +55,7 @@ def get_projects_tool() -> List[Dict[str, Any]]:
     Returns:
         List of all projects
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         projects = crud.project.get_projects(db=db)
         
@@ -86,7 +86,7 @@ def get_project_tool(project_id: int) -> Dict[str, Any]:
     Raises:
         ValueError: If project not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         project = crud.project.get_project(db=db, project_id=project_id)
         
@@ -123,7 +123,7 @@ def update_project_tool(
     Raises:
         ValueError: If project not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Check if project exists
         existing_project = crud.project.get_project(db=db, project_id=project_id)
@@ -141,7 +141,7 @@ def update_project_tool(
         project = crud.project.update_project(
             db=db,
             project_id=project_id,
-            project_update=update_data
+            project=update_data
         )
         
         return {
@@ -168,7 +168,7 @@ def delete_project_tool(project_id: int) -> Dict[str, Any]:
     Raises:
         ValueError: If project not found
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         # Check if project exists
         existing_project = crud.project.get_project(db=db, project_id=project_id)

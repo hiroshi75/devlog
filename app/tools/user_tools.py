@@ -10,7 +10,7 @@ This module provides user management functionality including:
 import re
 from typing import Optional, List, Dict, Any
 
-from app.db.database import get_db
+from app.db.database import SessionLocal
 from app.schemas.user import UserCreate
 from app.models.user import User as UserModel
 from app import crud
@@ -41,7 +41,7 @@ def create_user_tool(username: str, email: str) -> Dict[str, Any]:
     if not re.match(email_pattern, email):
         raise ValueError("Invalid email format")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         user_data = UserCreate(username=username, email=email)
         user = crud.user.create_user(db=db, user=user_data)
@@ -53,7 +53,8 @@ def create_user_tool(username: str, email: str) -> Dict[str, Any]:
             "id": user.id,
             "username": user.username,
             "email": user.email,
-            "created_at": user.created_at.isoformat() if user.created_at else None
+            "created_at": user.created_at.isoformat() if user.created_at else None,
+            "updated_at": user.updated_at.isoformat() if user.updated_at else None
         }
     finally:
         db.close()
@@ -66,7 +67,7 @@ def get_users_tool() -> List[Dict[str, Any]]:
     Returns:
         List of all users
     """
-    db = next(get_db())
+    db = SessionLocal()
     try:
         users = crud.user.get_users(db=db)
         
@@ -75,7 +76,8 @@ def get_users_tool() -> List[Dict[str, Any]]:
                 "id": user.id,
                 "username": user.username,
                 "email": user.email,
-                "created_at": user.created_at.isoformat() if user.created_at else None
+                "created_at": user.created_at.isoformat() if user.created_at else None,
+                "updated_at": user.updated_at.isoformat() if user.updated_at else None
             }
             for user in users
         ]
@@ -103,7 +105,7 @@ def get_user_tool(
     if user_id is None and username is None:
         raise ValueError("Either user_id or username must be provided")
     
-    db = next(get_db())
+    db = SessionLocal()
     try:
         if user_id is not None:
             user = crud.user.get_user(db=db, user_id=user_id)
@@ -118,7 +120,8 @@ def get_user_tool(
             "id": user.id,
             "username": user.username,
             "email": user.email,
-            "created_at": user.created_at.isoformat() if user.created_at else None
+            "created_at": user.created_at.isoformat() if user.created_at else None,
+            "updated_at": user.updated_at.isoformat() if user.updated_at else None
         }
     finally:
         db.close() 
