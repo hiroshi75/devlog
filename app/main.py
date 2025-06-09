@@ -47,8 +47,15 @@ from app.tools import (
     get_user_tool,
     # Message tools
     create_message_tool,
+    create_direct_message_tool,
     get_messages_tool,
+    get_direct_messages_tool,
+    get_thread_messages_tool,
+    get_unread_messages_tool,
     get_message_tool,
+    mark_message_as_read_tool,
+    mark_conversation_as_read_tool,
+    delete_message_tool,
 )
 
 # Import all resource handlers
@@ -69,7 +76,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create FastMCP instance
-mcp = FastMCP("DevLog")
+mcp = FastMCP("DevLog","""
+This tool is designed for developers to share updates on their progress, current tasks, and upcoming work — like a lightweight Slack for team coordination.
+""")
 
 # Initialize database on startup
 init_db()
@@ -174,15 +183,32 @@ def create_message(
     message_type: str = "comment",
     task_id: int = None,
     project_id: int = None,
-    parent_id: int = None
+    parent_id: int = None,
+    recipient_id: int = None
 ) -> dict:
-    """Create a new message"""
+    """Create a new message (including direct messages and threaded replies)"""
     return create_message_tool(
         content=content,
         user_id=user_id,
         message_type=message_type,
         task_id=task_id,
         project_id=project_id,
+        parent_id=parent_id,
+        recipient_id=recipient_id
+    )
+
+@mcp.tool()
+def create_direct_message(
+    content: str,
+    user_id: int,
+    recipient_id: int,
+    parent_id: int = None
+) -> dict:
+    """Create a direct message between two users"""
+    return create_direct_message_tool(
+        content=content,
+        user_id=user_id,
+        recipient_id=recipient_id,
         parent_id=parent_id
     )
 
@@ -191,7 +217,10 @@ def get_messages(
     project_id: int = None,
     task_id: int = None,
     user_id: int = None,
+    recipient_id: int = None,
     message_type: str = None,
+    parent_id: int = None,
+    include_deleted: bool = False,
     limit: int = 100
 ) -> list:
     """Get messages with optional filtering"""
@@ -199,9 +228,65 @@ def get_messages(
         project_id=project_id,
         task_id=task_id,
         user_id=user_id,
+        recipient_id=recipient_id,
         message_type=message_type,
+        parent_id=parent_id,
+        include_deleted=include_deleted,
         limit=limit
     )
+
+@mcp.tool()
+def get_direct_messages(
+    user_id: int,
+    other_user_id: int,
+    limit: int = 100
+) -> list:
+    """Get direct messages between two users"""
+    return get_direct_messages_tool(
+        user_id=user_id,
+        other_user_id=other_user_id,
+        limit=limit
+    )
+
+@mcp.tool()
+def get_thread_messages(
+    parent_id: int,
+    limit: int = 100
+) -> list:
+    """Get all replies to a specific message (thread)"""
+    return get_thread_messages_tool(
+        parent_id=parent_id,
+        limit=limit
+    )
+
+@mcp.tool()
+def get_unread_messages(
+    user_id: int,
+    message_type: str = None
+) -> list:
+    """Get unread messages for a user"""
+    return get_unread_messages_tool(
+        user_id=user_id,
+        message_type=message_type
+    )
+
+@mcp.tool()
+def mark_message_as_read(message_id: int) -> dict:
+    """Mark a specific message as read"""
+    return mark_message_as_read_tool(message_id=message_id)
+
+@mcp.tool()
+def mark_conversation_as_read(user_id: int, other_user_id: int) -> dict:
+    """Mark all messages in a conversation as read"""
+    return mark_conversation_as_read_tool(
+        user_id=user_id,
+        other_user_id=other_user_id
+    )
+
+@mcp.tool()
+def delete_message(message_id: int) -> dict:
+    """Delete a message (soft delete)"""
+    return delete_message_tool(message_id=message_id)
 
 @mcp.tool()
 def get_message(message_id: int) -> dict:

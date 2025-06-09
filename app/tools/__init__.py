@@ -25,8 +25,15 @@ from .user_tools import (
 )
 from .message_tools import (
     create_message_tool,
+    create_direct_message_tool,
     get_messages_tool,
+    get_direct_messages_tool,
+    get_thread_messages_tool,
+    get_unread_messages_tool,
     get_message_tool,
+    mark_message_as_read_tool,
+    mark_conversation_as_read_tool,
+    delete_message_tool,
 )
 
 __all__ = [
@@ -48,6 +55,13 @@ __all__ = [
     "get_user_tool",
     # Message tools
     "create_message_tool",
+    "create_direct_message_tool",
     "get_messages_tool",
+    "get_direct_messages_tool",
+    "get_thread_messages_tool",
+    "get_unread_messages_tool",
     "get_message_tool",
+    "mark_message_as_read_tool",
+    "mark_conversation_as_read_tool",
+    "delete_message_tool",
 ] 
